@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:47:58 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/14 17:56:24 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/14 18:26:25 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,13 @@ void	*philosopher(void *ptr)
 			ft_printf("%llu %d is died\n", current_ms(), philo->idx);
 			exit(EXIT_FAILURE);
 		}
-		ft_printf("%llu %d is eating\n", current_ms(), philo->idx);		
-		philo->last_eat_time = current_ms();
-		usleep(g_data.time_to_eat);
+		ft_printf("%llu %d is eating\n", current_ms(), philo->idx);	
+		usleep(g_data.time_to_eat * 1000);
 		pthread_mutex_unlock(philo->right);
 		pthread_mutex_unlock(philo->left);
+		philo->last_eat_time = current_ms();
 		ft_printf("%llu %d is sleeping\n", current_ms(), philo->idx);
-		usleep(g_data.time_to_sleep);
+		usleep(g_data.time_to_sleep * 1000);
 		ft_printf("%llu %d is thinking\n", current_ms(), philo->idx);
 	}
 	return (NULL);
