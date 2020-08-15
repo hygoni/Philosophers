@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:27:38 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/16 01:59:56 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/16 02:20:56 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,53 +34,55 @@ int		parse(t_data *data, int argc, char **argv)
 	return (1);
 }
 
-int		main(int argc, char **argv)
+int		error_ret(char *msg, int ret)
 {
-	int		i;
+	ft_putstr(msg);
+	return (ret);
+}
 
-	if (!parse(&g_data, argc, argv))
-	{
-		ft_putstr("Argument Error\n");
-		return (1);
-	}
-	if (init(&g_data) == -1)
-	{
-		ft_putstr("Error\n");
-		return (1);
-	}
-	t_philo *philosophers = (t_philo*)malloc(sizeof(t_philo) * g_data.number_of_philo);
-	pthread_t *threads = (pthread_t*)malloc(sizeof(pthread_t) * g_data.number_of_philo);
-	if (philosophers == NULL || threads == NULL)
-	{
-		ft_putstr("Error\n");
-		return (1);
-	}
+int		run_philo(t_philo **philos_out, pthread_t **threads_out)
+{
+	int	i;
+	t_philo *philos;
+	pthread_t *threads;
+
+	philos = (t_philo*)malloc(sizeof(t_philo) * g_data.number_of_philo);
+	threads = (pthread_t*)malloc(sizeof(pthread_t) * g_data.number_of_philo);
+	if (philos == NULL || threads == NULL)
+		return (error_ret("Error\n", 1));
 	i = 0;
 	while (i < g_data.number_of_philo)
 	{
-		philosophers[i].idx = i;
-		philosophers[i].last_eat_time = current_ms();
-		if (i == g_data.number_of_philo - 1)
-		{
-			philosophers[i].left = &g_data.mutex[0];
-			philosophers[i].right = &g_data.mutex[i];
-		}
-		else
-		{
-			philosophers[i].left = &g_data.mutex[i];
-			philosophers[i].right = &g_data.mutex[i + 1];
-		}
-		pthread_create(&threads[i], NULL, philosopher, &philosophers[i]);
+		philos[i].idx = i;
+		philos[i].last_eat_time = current_ms();
+		philos[i].left = &g_data.mutex[(i == g_data.number_of_philo - 1) ? 0 : i];
+		philos[i].right = &g_data.mutex[(i == g_data.number_of_philo - 1) ? i : i + 1];
+		pthread_create(&threads[i], NULL, philosopher, &philos[i]);
 		i++;
 	}
+	*philos_out = philos;
+	*threads_out = threads;
 	i = 0;
 	while (i < g_data.number_of_philo)
 		pthread_join(threads[i++], NULL);
-	free(philosophers);
-	if (clear(&g_data) == -1)
-	{
-		ft_putstr("Error\n");
-		return (1);
-	}
+	return (0);
+}
+
+
+int		main(int argc, char **argv)
+{
+	pthread_t	*threads;
+	t_philo		*philos;
+	
+	if (!parse(&g_data, argc, argv))
+		return (error_ret("Argument Error\n", 1));
+	else if (init(&g_data) == -1)
+		return (error_ret("Error\n", 1));
+	else if (run_philo(&philos, &threads) == -1)
+		return (error_ret("Error\n", 1));
+	else if (clear(&g_data) == -1)
+		return (error_ret("Error\n", 1));
+	free(philos);
+	free(threads);
 	return (0);
 }
