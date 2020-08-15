@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:27:38 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/16 01:36:14 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/16 01:50:41 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <stdio.h>
 
 t_data		g_data;
+int			g_died = 0;
 
 int		parse(t_data *data, int argc, char **argv)
 {
