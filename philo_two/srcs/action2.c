@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft.h                                               :+:      :+:    :+:   */
+/*   action2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/16 01:34:46 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/16 05:44:20 by hyeyoo           ###   ########.fr       */
+/*   Created: 2020/08/16 05:21:49 by hyeyoo            #+#    #+#             */
+/*   Updated: 2020/08/16 05:35:04 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_H
-# define FT_H
-# include <stdint.h>
-# include <pthread.h>
-# include <semaphore.h>
+#include "ft.h"
+#include "philo.h"
+#include "setting.h"
 
-void	ft_putchar(char c);
-void	ft_putstr(char *str);
-void	ft_putnbr(uint64_t n);
-int		ft_atoi(char *str);
-void	print(sem_t *lock, uint64_t time, int number, char *msg);
+extern		int	g_died;
+extern		t_data	g_data;
 
-#endif
+int		is_died(t_philo *philo)
+{
+	if (current_ms() - philo->last_eat_time >= (uint64_t)g_data.time_to_die)
+	{
+		print(g_data.io_lock, current_ms(), philo->idx, "died");
+		g_died = 1;
+		unlock(philo);
+		return (-1);
+	}
+	return (0);
+}

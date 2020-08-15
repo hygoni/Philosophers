@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:27:38 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/16 05:01:25 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/16 05:43:24 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ int		error_ret(char *msg, int ret)
 
 int		run_philo(t_philo **philos_out, pthread_t **threads_out)
 {
-	int	i;
-	t_philo *philos;
-	pthread_t *threads;
+	int			i;
+	t_philo		*philos;
+	pthread_t	*threads;
 
 	philos = (t_philo*)malloc(sizeof(t_philo) * g_data.number_of_philo);
 	threads = (pthread_t*)malloc(sizeof(pthread_t) * g_data.number_of_philo);
@@ -66,12 +66,11 @@ int		run_philo(t_philo **philos_out, pthread_t **threads_out)
 	return (0);
 }
 
-
 int		main(int argc, char **argv)
 {
 	pthread_t	*threads;
 	t_philo		*philos;
-	
+
 	if (parse(&g_data, argc, argv) == -1)
 		return (error_ret("Argument Error\n", 1));
 	else if (init(&g_data) == -1)

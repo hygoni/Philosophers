@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:47:58 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/16 03:13:54 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/16 05:41:50 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 #include "ft.h"
 #include <fcntl.h>
 #include <unistd.h>
+#include "philo.h"
+
 extern int	g_died;
 extern t_data	g_data;
 
@@ -54,10 +56,10 @@ int	clear(t_data *data)
 	return (0);
 }
 
-uint64_t	current_ms()
+uint64_t	current_ms(void)
 {
-	struct timeval time;
-	uint64_t millis;
+	struct timeval	time;
+	uint64_t		millis;
 
 	gettimeofday(&time, NULL);
 	millis = (time.tv_sec * (uint64_t)1000) + (time.tv_usec / 1000);
@@ -66,8 +68,8 @@ uint64_t	current_ms()
 
 void	*philosopher(void *ptr)
 {
-	t_philo *philo;
-	int	count;
+	t_philo	*philo;
+	int		count;
 
 	philo = (t_philo*)ptr;
 	count = g_data.times_must_eat;
@@ -75,27 +77,13 @@ void	*philosopher(void *ptr)
 	{
 		if (g_died)
 			return (NULL);
-		sem_wait(g_data.eat_lock);
-		sem_wait(g_data.fork_lock);
-		sem_wait(g_data.fork_lock);
-		if (current_ms() - philo->last_eat_time >= (uint64_t)g_data.time_to_die)
-		{
-			print(g_data.io_lock, current_ms(), philo->idx, "died");
-			g_died = 1;
-			sem_post(g_data.fork_lock);
-			sem_post(g_data.fork_lock);
-			sem_post(g_data.eat_lock);
+		lock();
+		if (is_died(philo) == -1)
 			return (NULL);
-		}
-		print(g_data.io_lock, current_ms(), philo->idx, "eating");	
-		usleep(g_data.time_to_eat * 1000);
-		sem_post(g_data.fork_lock);
-		sem_post(g_data.fork_lock);
-		sem_post(g_data.eat_lock);
-		philo->last_eat_time = current_ms();
-		print(g_data.io_lock, current_ms(), philo->idx, "sleeping");
-		usleep(g_data.time_to_sleep * 1000);
-		print(g_data.io_lock, current_ms(), philo->idx, "thinking");
+		do_eat(philo);
+		unlock();
+		do_sleep(philo);
+		do_think(philo);
 	}
 	return (NULL);
 }
