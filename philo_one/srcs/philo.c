@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:47:58 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/16 01:52:28 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/16 02:00:12 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,36 +19,46 @@
 extern int	g_died;
 extern t_data	g_data;
 
-void	init(t_data *data)
+int	init(t_data *data)
 {
 	int					i;
 	pthread_mutex_t		*mutex;
 
 	mutex = (pthread_mutex_t*)malloc(sizeof(pthread_mutex_t) * data->number_of_philo);
+	if (mutex == NULL)
+		return (-1);
 	i = 0;
 	while (i < data->number_of_philo)
 	{
-		pthread_mutex_init(&mutex[i], NULL);
+		if (pthread_mutex_init(&mutex[i], NULL) == -1)
+			return (-1);
 		i++;
 	}
 	data->mutex = mutex;
 	data->io_lock = (pthread_mutex_t*)malloc(sizeof(pthread_mutex_t));
-	pthread_mutex_init(data->io_lock, NULL);
+	if (data->io_lock == NULL)
+		return (-1);
+	if (pthread_mutex_init(data->io_lock, NULL) == -1)
+		return (-1);
+	return (0);
 }
 
-void	clear(t_data *data)
+int	clear(t_data *data)
 {
 	int i;
 
 	i = 0;
 	while (i < data->number_of_philo)
 	{
-		pthread_mutex_destroy(&data->mutex[i]);
+		if (pthread_mutex_destroy(&data->mutex[i]) == -1)
+			return (-1);
 		i++;
 	}
 	free(data->mutex);
-	pthread_mutex_destroy(data->io_lock);
+	if (pthread_mutex_destroy(data->io_lock) == -1)
+		return (-1);
 	free(data->io_lock);
+	return (0);
 }
 
 uint64_t	current_ms()

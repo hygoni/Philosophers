@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:27:38 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/16 01:50:41 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/16 01:59:56 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,18 @@ int		main(int argc, char **argv)
 		ft_putstr("Argument Error\n");
 		return (1);
 	}
-	init(&g_data);
+	if (init(&g_data) == -1)
+	{
+		ft_putstr("Error\n");
+		return (1);
+	}
 	t_philo *philosophers = (t_philo*)malloc(sizeof(t_philo) * g_data.number_of_philo);
 	pthread_t *threads = (pthread_t*)malloc(sizeof(pthread_t) * g_data.number_of_philo);
+	if (philosophers == NULL || threads == NULL)
+	{
+		ft_putstr("Error\n");
+		return (1);
+	}
 	i = 0;
 	while (i < g_data.number_of_philo)
 	{
@@ -68,6 +77,10 @@ int		main(int argc, char **argv)
 	while (i < g_data.number_of_philo)
 		pthread_join(threads[i++], NULL);
 	free(philosophers);
-	clear(&g_data);
+	if (clear(&g_data) == -1)
+	{
+		ft_putstr("Error\n");
+		return (1);
+	}
 	return (0);
 }
