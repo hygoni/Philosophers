@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:47:58 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/16 02:00:12 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/16 02:25:44 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,7 @@ int	init(t_data *data)
 		i++;
 	}
 	data->mutex = mutex;
-	data->io_lock = (pthread_mutex_t*)malloc(sizeof(pthread_mutex_t));
-	if (data->io_lock == NULL)
-		return (-1);
-	if (pthread_mutex_init(data->io_lock, NULL) == -1)
+	if (pthread_mutex_init(&data->io_lock, NULL) == -1)
 		return (-1);
 	return (0);
 }
@@ -55,9 +52,8 @@ int	clear(t_data *data)
 		i++;
 	}
 	free(data->mutex);
-	if (pthread_mutex_destroy(data->io_lock) == -1)
+	if (pthread_mutex_destroy(&data->io_lock) == -1)
 		return (-1);
-	free(data->io_lock);
 	return (0);
 }
 
@@ -86,20 +82,20 @@ void	*philosopher(void *ptr)
 		pthread_mutex_lock(philo->right);
 		if (current_ms() - philo->last_eat_time >= (uint64_t)g_data.time_to_die)
 		{
-			print(g_data.io_lock, current_ms(), philo->idx, "died");
+			print(&g_data.io_lock, current_ms(), philo->idx, "died");
 			g_died = 1;
 			pthread_mutex_unlock(philo->right);
 			pthread_mutex_unlock(philo->left);
 			return (NULL);
 		}
-		print(g_data.io_lock, current_ms(), philo->idx, "eating");	
+		print(&g_data.io_lock, current_ms(), philo->idx, "eating");	
 		usleep(g_data.time_to_eat * 1000);
 		pthread_mutex_unlock(philo->right);
 		pthread_mutex_unlock(philo->left);
 		philo->last_eat_time = current_ms();
-		print(g_data.io_lock, current_ms(), philo->idx, "sleeping");
+		print(&g_data.io_lock, current_ms(), philo->idx, "sleeping");
 		usleep(g_data.time_to_sleep * 1000);
-		print(g_data.io_lock, current_ms(), philo->idx, "thinking");
+		print(&g_data.io_lock, current_ms(), philo->idx, "thinking");
 	}
 	return (NULL);
 }
