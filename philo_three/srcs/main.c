@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:27:38 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/16 04:55:11 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/16 05:01:40 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int		run_philo(t_philo **philos_out, pthread_t **threads_out)
 	i = 0;
 	while (i < g_data.number_of_philo)
 	{
-		philos[i].idx = i;
+		philos[i].idx = i + 1;
 		philos[i].last_eat_time = current_ms();
 		pthread_create(&threads[i], NULL, monitor, &philos[i]);
 		i++;
