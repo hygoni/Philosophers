@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:27:38 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/16 02:36:48 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/16 03:04:18 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int			g_died = 0;
 int		parse(t_data *data, int argc, char **argv)
 {
 	if (argc != 6 && argc != 5)
-		return (0);
+		return (-1);
 	data->number_of_philo = ft_atoi(argv[1]);
 	data->time_to_die = ft_atoi(argv[2]);
 	data->time_to_eat = ft_atoi(argv[3]);
@@ -31,7 +31,7 @@ int		parse(t_data *data, int argc, char **argv)
 		data->times_must_eat = ft_atoi(argv[5]);
 	else
 		data->times_must_eat = -1;
-	return (1);
+	return (0);
 }
 
 int		error_ret(char *msg, int ret)
@@ -72,7 +72,7 @@ int		main(int argc, char **argv)
 	pthread_t	*threads;
 	t_philo		*philos;
 	
-	if (!parse(&g_data, argc, argv))
+	if (parse(&g_data, argc, argv) == -1)
 		return (error_ret("Argument Error\n", 1));
 	else if (init(&g_data) == -1)
 		return (error_ret("Error\n", 1));

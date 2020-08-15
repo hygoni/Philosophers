@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:47:58 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/16 03:02:02 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/16 03:13:54 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,12 @@ int	init(t_data *data)
 	n = data->number_of_philo;
 	forks = (n == 1) ? 2 : n;
 	if (forks % 2 == 0)
-	{
 		max_eating = (forks / 2);
-	}
 	else
-	{
 		max_eating = (forks - 1) / 2;
-	}
+	sem_unlink("eat_lock");
+	sem_unlink("fork_lock");
+	sem_unlink("io_lock");
 	data->eat_lock = sem_open("eat_lock", O_CREAT, 0644, max_eating);
 	data->fork_lock = sem_open("fork_lock", O_CREAT, 0644, forks);
 	data->io_lock = sem_open("io_lock", O_CREAT, 0644, 1);
