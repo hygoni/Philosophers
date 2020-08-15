@@ -1,29 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.h                                            :+:      :+:    :+:   */
+/*   action2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/14 14:59:38 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/16 05:48:54 by hyeyoo           ###   ########.fr       */
+/*   Created: 2020/08/16 05:21:49 by hyeyoo            #+#    #+#             */
+/*   Updated: 2020/08/16 05:35:04 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
-# include "setting.h"
+#include "ft.h"
+#include "philo.h"
+#include "setting.h"
 
-int		init(t_data *data);
-int		clear(t_data *data);
-void	*monitor(void *ptr);
-void	*philosopher(void *ptr);
-uint64_t	current_ms();
-void	do_eat(t_philo *philo);
-void	do_sleep(t_philo *philo);
-void	do_think(t_philo *philo);
-int		is_died(t_philo *philo);
-void	lock();
-void	unlock();
+extern		int	g_died;
+extern		t_data	g_data;
 
-#endif
+int		is_died(t_philo *philo)
+{
+	if (current_ms() - philo->last_eat_time >= (uint64_t)g_data.time_to_die)
+	{
+		print(g_data.io_lock, current_ms(), philo->idx, "died");
+		g_died = 1;
+		unlock(philo);
+		return (-1);
+	}
+	return (0);
+}
