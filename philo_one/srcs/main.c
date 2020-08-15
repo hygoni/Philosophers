@@ -6,11 +6,11 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:27:38 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/14 17:21:04 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/16 01:36:14 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft.h"
 #include "setting.h"
 #include "philo.h"
 #include <stdlib.h>

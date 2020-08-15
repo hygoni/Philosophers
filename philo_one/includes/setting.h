@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:39:16 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/14 17:58:59 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/16 01:42:06 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct		s_data
 	int					times_must_eat;
 	int					philo_idx;
 	pthread_mutex_t		*mutex;
+	pthread_mutex_t		*io_lock;
 }		t_data;
 
 typedef struct		s_philo

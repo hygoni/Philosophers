@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:47:58 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/14 18:26:25 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/16 01:47:07 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 #include <stdlib.h>
 #include <sys/time.h>
 #include "setting.h"
-#include "ft_printf.h"
-#include "libft.h"
+#include "ft.h"
 #include <unistd.h>
 
 t_data	g_data;
@@ -33,6 +32,8 @@ void	init(t_data *data)
 		i++;
 	}
 	data->mutex = mutex;
+	data->io_lock = (pthread_mutex_t*)malloc(sizeof(pthread_mutex_t));
+	pthread_mutex_init(data->io_lock, NULL);
 }
 
 void	clear(t_data *data)
@@ -46,6 +47,8 @@ void	clear(t_data *data)
 		i++;
 	}
 	free(data->mutex);
+	pthread_mutex_destroy(data->io_lock);
+	free(data->io_lock);
 }
 
 uint64_t	current_ms()
@@ -71,17 +74,17 @@ void	*philosopher(void *ptr)
 		pthread_mutex_lock(philo->right);
 		if (current_ms() - philo->last_eat_time >= (uint64_t)g_data.time_to_die)
 		{
-			ft_printf("%llu %d is died\n", current_ms(), philo->idx);
+			print(g_data.io_lock, current_ms(), philo->idx, "died");
 			exit(EXIT_FAILURE);
 		}
-		ft_printf("%llu %d is eating\n", current_ms(), philo->idx);	
+		print(g_data.io_lock, current_ms(), philo->idx, "eating");	
 		usleep(g_data.time_to_eat * 1000);
 		pthread_mutex_unlock(philo->right);
 		pthread_mutex_unlock(philo->left);
 		philo->last_eat_time = current_ms();
-		ft_printf("%llu %d is sleeping\n", current_ms(), philo->idx);
+		print(g_data.io_lock, current_ms(), philo->idx, "sleeping");
 		usleep(g_data.time_to_sleep * 1000);
-		ft_printf("%llu %d is thinking\n", current_ms(), philo->idx);
+		print(g_data.io_lock, current_ms(), philo->idx, "thinking");
 	}
 	return (NULL);
 }
