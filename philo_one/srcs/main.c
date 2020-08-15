@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:27:38 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/16 05:01:15 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/16 05:13:22 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int		parse(t_data *data, int argc, char **argv)
 {
 	if (argc != 6 && argc != 5)
 		return (0);
-	data->number_of_philo = ft_atoi(argv[1]);
+	data->size = ft_atoi(argv[1]);
 	data->time_to_die = ft_atoi(argv[2]);
 	data->time_to_eat = ft_atoi(argv[3]);
 	data->time_to_sleep = ft_atoi(argv[4]);
@@ -42,38 +42,37 @@ int		error_ret(char *msg, int ret)
 
 int		run_philo(t_philo **philos_out, pthread_t **threads_out)
 {
-	int	i;
-	t_philo *philos;
-	pthread_t *threads;
+	int			i;
+	t_philo		*philos;
+	pthread_t	*threads;
 
-	philos = (t_philo*)malloc(sizeof(t_philo) * g_data.number_of_philo);
-	threads = (pthread_t*)malloc(sizeof(pthread_t) * g_data.number_of_philo);
+	philos = (t_philo*)malloc(sizeof(t_philo) * g_data.size);
+	threads = (pthread_t*)malloc(sizeof(pthread_t) * g_data.size);
 	if (philos == NULL || threads == NULL)
 		return (error_ret("Error\n", 1));
 	i = 0;
-	while (i < g_data.number_of_philo)
+	while (i < g_data.size)
 	{
 		philos[i].idx = i + 1;
 		philos[i].last_eat_time = current_ms();
-		philos[i].left = &g_data.mutex[(i == g_data.number_of_philo - 1) ? 0 : i];
-		philos[i].right = &g_data.mutex[(i == g_data.number_of_philo - 1) ? i : i + 1];
+		philos[i].left = &g_data.mutex[(i == g_data.size - 1) ? 0 : i];
+		philos[i].right = &g_data.mutex[(i == g_data.size - 1) ? i : i + 1];
 		pthread_create(&threads[i], NULL, philosopher, &philos[i]);
 		i++;
 	}
 	*philos_out = philos;
 	*threads_out = threads;
 	i = 0;
-	while (i < g_data.number_of_philo)
+	while (i < g_data.size)
 		pthread_join(threads[i++], NULL);
 	return (0);
 }
-
 
 int		main(int argc, char **argv)
 {
 	pthread_t	*threads;
 	t_philo		*philos;
-	
+
 	if (!parse(&g_data, argc, argv))
 		return (error_ret("Argument Error\n", 1));
 	else if (init(&g_data) == -1)
