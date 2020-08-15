@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:47:58 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/16 02:46:26 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/16 03:02:02 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,21 @@ extern t_data	g_data;
 int	init(t_data *data)
 {
 	int	max_eating;
-	int	sticks;
+	int	forks;
+	int	n;
 
-	max_eating = (data->number_of_philo % 2 == 0) ? data->number_of_philo / 2 : (data->number_of_philo - 1) / 2;
-	sticks = (data->number_of_philo == 1) ? 2 : data->number_of_philo;
+	n = data->number_of_philo;
+	forks = (n == 1) ? 2 : n;
+	if (forks % 2 == 0)
+	{
+		max_eating = (forks / 2);
+	}
+	else
+	{
+		max_eating = (forks - 1) / 2;
+	}
 	data->eat_lock = sem_open("eat_lock", O_CREAT, 0644, max_eating);
-	data->fork_lock = sem_open("fork_lock", O_CREAT, 0644, sticks);
+	data->fork_lock = sem_open("fork_lock", O_CREAT, 0644, forks);
 	data->io_lock = sem_open("io_lock", O_CREAT, 0644, 1);
 	if (!data->eat_lock || !data->fork_lock || !data->io_lock)
 		return (-1);
@@ -66,6 +75,7 @@ void	*philosopher(void *ptr)
 	while (count-- || g_data.times_must_eat < 0)
 	{
 		if (g_died)
+			return (NULL);
 		sem_wait(g_data.eat_lock);
 		sem_wait(g_data.fork_lock);
 		sem_wait(g_data.fork_lock);
@@ -73,9 +83,9 @@ void	*philosopher(void *ptr)
 		{
 			print(g_data.io_lock, current_ms(), philo->idx, "died");
 			g_died = 1;
+			sem_post(g_data.fork_lock);
+			sem_post(g_data.fork_lock);
 			sem_post(g_data.eat_lock);
-			sem_post(g_data.fork_lock);
-			sem_post(g_data.fork_lock);
 			return (NULL);
 		}
 		print(g_data.io_lock, current_ms(), philo->idx, "eating");	
