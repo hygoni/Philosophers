@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:47:58 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/16 05:59:48 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/17 12:43:18 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 extern int	g_died;
 extern t_data	g_data;
 
-int	init(t_data *data)
+int				init(t_data *data)
 {
 	int	max_eating;
 	int	forks;
@@ -47,7 +47,7 @@ int	init(t_data *data)
 	return (0);
 }
 
-int	clear(t_data *data)
+int				clear(t_data *data)
 {
 	sem_close(data->eat_lock);
 	sem_close(data->fork_lock);
@@ -59,7 +59,7 @@ int	clear(t_data *data)
 	return (0);
 }
 
-uint64_t	current_ms(void)
+uint64_t		current_ms(void)
 {
 	struct timeval	time;
 	uint64_t		millis;
@@ -69,7 +69,7 @@ uint64_t	current_ms(void)
 	return (millis);
 }
 
-void	*philosopher(void *ptr)
+void			*philosopher(void *ptr)
 {
 	t_philo	*philo;
 	int		count;
@@ -91,7 +91,7 @@ void	*philosopher(void *ptr)
 	return (NULL);
 }
 
-void	*monitor(void *ptr)
+void			*monitor(void *ptr)
 {
 	pid_t	child;
 	int		status;
