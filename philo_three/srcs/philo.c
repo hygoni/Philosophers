@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:47:58 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/17 12:43:18 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/17 13:41:29 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 #include <unistd.h>
 #include "philo.h"
 
-extern int	g_died;
 extern t_data	g_data;
 
 int				init(t_data *data)
@@ -78,11 +77,9 @@ void			*philosopher(void *ptr)
 	count = g_data.times_must_eat;
 	while (count-- || g_data.times_must_eat < 0)
 	{
-		if (g_died)
-			return (NULL);
-		lock();
 		if (is_died(philo) == -1)
 			return (NULL);
+		lock(philo);
 		do_eat(philo);
 		unlock();
 		do_sleep(philo);

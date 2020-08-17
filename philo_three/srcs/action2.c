@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 05:21:49 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/16 05:35:04 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/17 13:40:51 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "philo.h"
 #include "setting.h"
 
-extern		int	g_died;
 extern		t_data	g_data;
 
 int		is_died(t_philo *philo)
@@ -22,8 +21,7 @@ int		is_died(t_philo *philo)
 	if (current_ms() - philo->last_eat_time >= (uint64_t)g_data.time_to_die)
 	{
 		print(g_data.io_lock, current_ms(), philo->idx, "died");
-		g_died = 1;
-		unlock(philo);
+		unlock();
 		return (-1);
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 01:26:33 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/16 02:44:47 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/17 13:36:31 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void	print(sem_t *lock, uint64_t timestamp, int philo_number, char *action)
 	ft_putchar(' ');
 	ft_putnbr(philo_number);
 	ft_putchar(' ');
-	ft_putstr(" is ");
 	ft_putstr(action);
 	ft_putchar('\n');
 	sem_post(lock);
