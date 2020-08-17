@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:47:58 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/17 13:41:29 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/17 13:44:31 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,9 @@ void			*philosopher(void *ptr)
 	count = g_data.times_must_eat;
 	while (count-- || g_data.times_must_eat < 0)
 	{
+		lock(philo);
 		if (is_died(philo) == -1)
 			return (NULL);
-		lock(philo);
 		do_eat(philo);
 		unlock();
 		do_sleep(philo);
