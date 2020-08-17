@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:47:58 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/16 05:40:19 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/17 12:39:43 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 extern int	g_died;
 extern t_data	g_data;
 
-int		init(t_data *data)
+int				init(t_data *data)
 {
 	int					i;
 	pthread_mutex_t		*mutex;
@@ -42,7 +42,7 @@ int		init(t_data *data)
 	return (0);
 }
 
-int		clear(t_data *data)
+int				clear(t_data *data)
 {
 	int i;
 
@@ -69,7 +69,7 @@ uint64_t		current_ms(void)
 	return (millis);
 }
 
-void	*philosopher(void *ptr)
+void			*philosopher(void *ptr)
 {
 	t_philo	*philo;
 	int		count;
