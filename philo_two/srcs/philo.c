@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:47:58 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/17 12:41:02 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/17 13:33:44 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void			*philosopher(void *ptr)
 	{
 		if (g_died)
 			return (NULL);
-		lock();
+		lock(philo);
 		if (is_died(philo) == -1)
 			return (NULL);
 		do_eat(philo);
