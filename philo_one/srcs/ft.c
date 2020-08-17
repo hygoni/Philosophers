@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 01:26:33 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/16 05:10:45 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/17 13:01:29 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void	print(pthread_mutex_t *lock, uint64_t time, int number, char *action)
 	ft_putchar(' ');
 	ft_putnbr(number);
 	ft_putchar(' ');
-	ft_putstr(" is ");
 	ft_putstr(action);
 	ft_putchar('\n');
 	pthread_mutex_unlock(lock);
