@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 05:21:49 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/19 01:40:37 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/19 01:44:17 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void		*monitor(void *ptr)
 {
 	int			i;
 	t_philo		*philos;
-	uint64_t	diff;
 
 	philos = (t_philo*)ptr;
 	while (1)
@@ -53,9 +52,8 @@ void		*monitor(void *ptr)
 		i = 0;
 		while (i < g_data.size)
 		{
-			diff = current_ms() - philos[i].last_eat_time;
-			if (diff >= (uint64_t)g_data.time_to_die &&
-					!philos[i].is_stopped)
+			if (current_ms() - philos[i].last_eat_time >= \
+					(uint64_t)g_data.time_to_die && !philos[i].is_stopped)
 			{
 				pthread_mutex_lock(&g_data.dead);
 				print(&g_data.io_lock, current_ms() - g_data.start, \
