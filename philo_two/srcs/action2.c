@@ -6,11 +6,10 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 05:21:49 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/18 21:08:32 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/19 01:47:18 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <unistd.h>
 #include "ft.h"
 #include "philo.h"
@@ -37,6 +36,8 @@ int			is_eating_done(t_philo *philos)
 	{
 		if (philos[i].count > 0)
 			return (0);
+		if (philos[i].count == 0 && !philos[i].is_stopped)
+			return (0);
 		i++;
 	}
 	return (1);
@@ -53,12 +54,12 @@ void		*monitor(void *ptr)
 		i = 0;
 		while (i < g_data.size)
 		{
-			if (current_ms() - philos[i].last_eat_time
-					>= (uint64_t)g_data.time_to_die)
+			if (current_ms() - philos[i].last_eat_time >= \
+			(uint64_t)g_data.time_to_die && !philos[i].is_stopped)
 			{
-				sem_wait(g_data.dead_lock);
 				print(g_data.io_lock, current_ms() - g_data.start, \
 						philos[i].idx, "died");
+				sem_wait(g_data.dead_lock);
 				return (NULL);
 			}
 			if (is_eating_done(philos))

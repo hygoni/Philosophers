@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:39:16 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/18 22:04:45 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/19 01:47:27 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct		s_philo
 	int				idx;
 	int				count;
 	uint64_t		last_eat_time;
+	int				is_stopped;
 }					t_philo;
 
 #endif
