@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:47:58 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/17 12:39:43 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/18 02:20:08 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,24 @@
 #include "ft.h"
 #include "philo.h"
 #include <unistd.h>
+#include <stdlib.h>
+#include <memory.h>
 
 extern int	g_died;
 extern t_data	g_data;
+
+
+int custom_mutexattr_init (pthread_mutexattr_t *attr)
+{
+	attr->mutexkind = PTHREAD_MUTEX_ERRORCHECK;
+  return 0;
+}
 
 int				init(t_data *data)
 {
 	int					i;
 	pthread_mutex_t		*mutex;
+	pthread_mutexattr_t	attr;
 
 	mutex = (pthread_mutex_t*)malloc(sizeof(pthread_mutex_t) * data->size);
 	if (mutex == NULL)
@@ -37,7 +47,11 @@ int				init(t_data *data)
 		i++;
 	}
 	data->mutex = mutex;
+	data->start = current_ms();
 	if (pthread_mutex_init(&data->io_lock, NULL) == -1)
+		return (-1);
+	custom_mutexattr_init(&attr);
+	if (pthread_mutex_init(&data->dead, &attr) == -1)
 		return (-1);
 	return (0);
 }
@@ -55,6 +69,8 @@ int				clear(t_data *data)
 	}
 	free(data->mutex);
 	if (pthread_mutex_destroy(&data->io_lock) == -1)
+		return (-1);
+	if (pthread_mutex_destroy(&data->dead) == -1)
 		return (-1);
 	return (0);
 }
@@ -78,11 +94,9 @@ void			*philosopher(void *ptr)
 	count = g_data.times_must_eat;
 	while (count-- || g_data.times_must_eat < 0)
 	{
-		if (g_died)
+		if (is_dead(&g_data.dead))
 			return (NULL);
 		lock(philo);
-		if (is_died(philo) == -1)
-			return (NULL);
 		do_eat(philo);
 		unlock(philo);
 		do_sleep(philo);

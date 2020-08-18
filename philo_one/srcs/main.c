@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:27:38 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/16 05:13:22 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/18 00:45:07 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int		run_philo(t_philo **philos_out, pthread_t **threads_out)
 	pthread_t	*threads;
 
 	philos = (t_philo*)malloc(sizeof(t_philo) * g_data.size);
-	threads = (pthread_t*)malloc(sizeof(pthread_t) * g_data.size);
+	threads = (pthread_t*)malloc(sizeof(pthread_t) * (g_data.size + 1));
 	if (philos == NULL || threads == NULL)
 		return (error_ret("Error\n", 1));
 	i = 0;
@@ -60,6 +60,7 @@ int		run_philo(t_philo **philos_out, pthread_t **threads_out)
 		pthread_create(&threads[i], NULL, philosopher, &philos[i]);
 		i++;
 	}
+	pthread_create(&threads[g_data.size], NULL, monitor, philos);
 	*philos_out = philos;
 	*threads_out = threads;
 	i = 0;

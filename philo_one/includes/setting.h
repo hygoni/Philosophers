@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:39:16 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/17 12:52:14 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/18 00:34:36 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ typedef struct			s_data
 	int					time_to_sleep;
 	int					times_must_eat;
 	int					philo_idx;
+	uint64_t				start;
 	pthread_mutex_t		*mutex;
+	pthread_mutex_t		dead;
 	pthread_mutex_t		io_lock;
 }						t_data;
 

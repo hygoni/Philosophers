@@ -6,13 +6,17 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 01:26:33 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/17 13:01:29 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/18 00:57:00 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <pthread.h>
 #include <stdint.h>
 #include <unistd.h>
+#include "setting.h"
+#include "philo.h"
+
+extern	t_data	g_data;
 
 void	ft_putchar(char c)
 {
@@ -48,8 +52,11 @@ void	ft_putnbr(uint64_t n)
 
 void	print(pthread_mutex_t *lock, uint64_t time, int number, char *action)
 {
+	if (is_dead(&g_data.dead))
+		return ;
 	pthread_mutex_lock(lock);
 	ft_putnbr(time);
+	ft_putstr("ms");
 	ft_putchar(' ');
 	ft_putnbr(number);
 	ft_putchar(' ');
