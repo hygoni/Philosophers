@@ -1,5 +1,5 @@
 NAME = philo_three
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g -pthread
 CC = gcc
 SRCS = ${addprefix srcs/,${shell ls srcs | grep '\.c'}}
 OBJS = ${SRCS:.c=.o}

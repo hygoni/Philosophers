@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:27:38 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/17 13:37:34 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/18 18:25:57 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int		run_philo(t_philo **philos_out, pthread_t **threads_out)
 	threads = (pthread_t*)malloc(sizeof(pthread_t) * g_data.number_of_philo);
 	if (philos == NULL || threads == NULL)
 		return (error_ret("Error\n", 1));
+	g_data.start = current_ms();
 	i = 0;
 	while (i < g_data.number_of_philo)
 	{
