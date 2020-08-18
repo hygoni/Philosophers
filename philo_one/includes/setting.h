@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:39:16 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/18 22:07:20 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/19 01:37:24 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct			s_philo
 	pthread_mutex_t		*left;
 	pthread_mutex_t		*right;
 	int					idx;
+	int					is_stopped;
 	int					count;
 	uint64_t			last_eat_time;
 }						t_philo;

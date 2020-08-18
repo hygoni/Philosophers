@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:47:58 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/19 01:16:33 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/19 01:40:25 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,22 +76,21 @@ uint64_t		current_ms(void)
 	return (millis);
 }
 
-#include <stdio.h>
-
 void			*philosopher(void *ptr)
 {
 	t_philo	*philo;
 
 	philo = (t_philo*)ptr;
 	philo->count = g_data.times_must_eat;
+	philo->is_stopped = 0;
 	while (philo->count > 0 || g_data.times_must_eat < 0)
 	{
-		stop_if_dead();
 		lock(philo);
 		do_eat(philo);
 		unlock(philo);
 		do_sleep(philo);
 		do_think(philo);
 	}
+	philo->is_stopped = 1;
 	return (NULL);
 }
