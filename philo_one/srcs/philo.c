@@ -6,10 +6,11 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:47:58 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/18 15:53:13 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/18 18:22:07 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include <pthread.h>
 #include <stdlib.h>
 #include <sys/time.h>

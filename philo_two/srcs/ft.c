@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 01:26:33 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/18 17:16:12 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/18 17:42:46 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	print(sem_t *lock, uint64_t timestamp, int philo_number, char *action)
 {
 	sem_wait(lock);
 	ft_putnbr(timestamp);
-	ft_putstr("ms");
 	ft_putchar(' ');
 	ft_putnbr(philo_number);
 	ft_putchar(' ');

@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 05:21:49 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/18 15:54:32 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/18 18:21:54 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,16 @@ void		*monitor(void *ptr)
 {
 	int			i;
 	t_philo		*philos;
+	uint64_t		diff;
 
-	usleep(10000);
 	philos = (t_philo*)ptr;
 	while (1)
 	{
 		i = 0;
 		while (i < g_data.size)
 		{
-			if (current_ms() - philos[i].last_eat_time
-					>= (uint64_t)g_data.time_to_die)
+			diff = current_ms() - philos[i].last_eat_time;
+			if (diff >= (uint64_t)g_data.time_to_die)
 			{
 				print(&g_data.io_lock, current_ms() - g_data.start, \
 						philos[i].idx, "died");
@@ -62,8 +62,9 @@ void		*monitor(void *ptr)
 			}
 			if (is_eating_done(philos))
 				return (NULL);
-			usleep(100);
+			i++;
 		}
+		usleep(100);
 	}
 	return (NULL);
 }
