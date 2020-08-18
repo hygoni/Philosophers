@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 05:16:30 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/18 18:02:17 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/18 21:20:04 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ void	do_eat(t_philo *philo)
 {
 	print(&g_data.io_lock, current_ms() - g_data.start, \
 			philo->idx, "is eating");
-	usleep(g_data.time_to_eat * 1000);
 	philo->last_eat_time = current_ms();
+	usleep(g_data.time_to_eat * 1000);
 }
 
 void	do_sleep(t_philo *philo)

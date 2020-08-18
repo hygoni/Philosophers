@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:39:16 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/18 16:38:29 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/18 22:04:45 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef struct		s_data
 	int				time_to_sleep;
 	int				times_must_eat;
 	int				size;
-	uint64_t			start;
+	uint64_t		start;
 	sem_t			*eat_lock;
 	sem_t			*fork_lock;
 	sem_t			*io_lock;

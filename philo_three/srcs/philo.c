@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:47:58 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/18 20:33:55 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/18 22:01:53 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,26 @@
 #include <sys/wait.h>
 
 extern t_data	g_data;
+
+void			*monitor_starvation(void *ptr)
+{
+	t_philo		*philo;
+
+	philo = (t_philo*)ptr;
+	while (1)
+	{
+		if (current_ms() - philo->last_eat_time >= (uint64_t)g_data.time_to_die)
+		{
+			sem_wait(g_data.dead_lock);
+			print(g_data.io_lock, current_ms() - g_data.start, \
+					philo->idx, "died");
+			kill(g_data.pid[philo->idx], SIGINT);
+			return (NULL);
+		}
+		usleep(100);
+	}
+	return (NULL);
+}
 
 int				init(t_data *data)
 {
@@ -44,7 +64,8 @@ int				init(t_data *data)
 	data->io_lock = sem_open("io_lock", O_CREAT, 0644, 1);
 	data->dead_lock = sem_open("dead_lock", O_CREAT, 0644, 1);
 	data->pid = (pid_t*)malloc(sizeof(pid_t) * (n + 1));
-	if (!data->eat_lock || !data->fork_lock || !data->io_lock || !data->pid || !data->dead_lock)
+	if (!data->eat_lock || !data->fork_lock || !data->io_lock
+			|| !data->pid || !data->dead_lock)
 		return (-1);
 	return (0);
 }
@@ -75,11 +96,14 @@ uint64_t		current_ms(void)
 
 void			*philosopher(void *ptr)
 {
-	t_philo	*philo;
-	int		count;
+	t_philo		*philo;
+	int			count;
+	pthread_t	thread;
 
 	philo = (t_philo*)ptr;
 	count = g_data.times_must_eat;
+	pthread_create(&thread, NULL, monitor_starvation, philo);
+	pthread_detach(thread);
 	while (count-- || g_data.times_must_eat < 0)
 	{
 		stop_if_dead();
@@ -91,58 +115,3 @@ void			*philosopher(void *ptr)
 	}
 	return (NULL);
 }
-
-
-void			*monitor_starvation(void *ptr)
-{
-	t_philo		*philo;
-
-	philo = (t_philo*)ptr;
-	while (1)
-	{
-		if (current_ms() - philo->last_eat_time >= (uint64_t)g_data.time_to_die)
-		{
-			sem_wait(g_data.dead_lock);
-			print(g_data.io_lock, current_ms() - g_data.start, philo->idx, "died");
-			kill(g_data.pid[philo->idx], SIGINT);
-			return (NULL);
-		}
-		usleep(100);
-	}
-	return (NULL);
-}
-
-#include <stdio.h>
-
-void			*monitor(void *ptr)
-{
-	pid_t	child;
-	int		status;
-	int		i;
-	t_philo	*philo;
-	pthread_t	thread;
-
-	philo = (t_philo*)ptr;
-	child = fork();
-	if (child == 0)
-		philosopher(ptr);
-	else
-	{
-		g_data.pid[philo->idx] = child;
-		pthread_create(&thread, NULL, monitor_starvation, philo);
-		pthread_detach(thread);
-		waitpid(child, &status, 0);
-		if (WIFSIGNALED(status))
-		{
-			i = 0;
-			while (i < g_data.number_of_philo)
-			{
-				if (g_data.pid[i] != child)
-					kill(g_data.pid[i], SIGINT);
-				i++;
-			}
-		}
-	}
-	return (NULL);
-}
-

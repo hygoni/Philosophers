@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 14:59:38 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/18 17:11:32 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/18 22:05:06 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void		do_sleep(t_philo *philo);
 void		do_think(t_philo *philo);
 void		lock(t_philo *philo);
 void		unlock();
-void			stop_if_dead(void);
+void		stop_if_dead(void);
 void		*monitor(void *ptr);
 
 #endif

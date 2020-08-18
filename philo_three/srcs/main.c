@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:27:38 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/18 18:25:57 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/18 22:01:57 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "setting.h"
 #include "philo.h"
 #include <stdlib.h>
-#include <stdio.h>
 
 t_data		g_data;
 

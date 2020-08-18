@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 05:21:49 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/18 18:21:54 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/18 22:05:32 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void		*monitor(void *ptr)
 {
 	int			i;
 	t_philo		*philos;
-	uint64_t		diff;
+	uint64_t	diff;
 
 	philos = (t_philo*)ptr;
 	while (1)

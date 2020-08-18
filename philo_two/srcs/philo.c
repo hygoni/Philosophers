@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:47:58 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/18 17:29:29 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/18 22:03:52 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ int				init(t_data *data)
 	data->fork_lock = sem_open("fork_lock", O_CREAT, 0644, forks);
 	data->io_lock = sem_open("io_lock", O_CREAT, 0644, 1);
 	data->dead_lock = sem_open("dead_lock", O_CREAT, 0644, 1);
-	if (!data->eat_lock || !data->fork_lock || !data->io_lock || !data->dead_lock)
+	if (!data->eat_lock || !data->fork_lock ||
+			!data->io_lock || !data->dead_lock)
 		return (-1);
 	return (0);
 }
