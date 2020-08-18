@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 01:26:33 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/18 00:57:00 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/18 15:53:01 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,25 +35,14 @@ void	ft_putstr(char *str)
 
 void	ft_putnbr(uint64_t n)
 {
-	if (n < 0)
-	{
-		ft_putchar('-');
-		if (n / 10 != 0)
-			ft_putnbr(-(n / 10));
-		ft_putchar(-(n % 10) + '0');
-	}
-	else
-	{
-		if (n >= 10)
-			ft_putnbr(n / 10);
-		ft_putchar(n % 10 + '0');
-	}
+	if (n >= 10)
+		ft_putnbr(n / 10);
+	ft_putchar(n % 10 + '0');
 }
 
 void	print(pthread_mutex_t *lock, uint64_t time, int number, char *action)
 {
-	if (is_dead(&g_data.dead))
-		return ;
+	stop_if_dead();
 	pthread_mutex_lock(lock);
 	ft_putnbr(time);
 	ft_putstr("ms");

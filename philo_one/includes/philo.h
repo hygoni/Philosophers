@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 14:59:38 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/18 00:48:44 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/18 15:26:53 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ void		do_think(t_philo *philo);
 int			is_died(t_philo *philo);
 void		lock(t_philo *philo);
 void		unlock(t_philo *philo);
-int			is_dead(pthread_mutex_t *dead);
+void		stop_if_dead();
 void		*monitor(void *philos);
+void		*monitor_eat(void *ptr);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:47:58 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/18 02:20:08 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/18 15:53:13 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,10 @@
 extern int	g_died;
 extern t_data	g_data;
 
-
-int custom_mutexattr_init (pthread_mutexattr_t *attr)
-{
-	attr->mutexkind = PTHREAD_MUTEX_ERRORCHECK;
-  return 0;
-}
-
 int				init(t_data *data)
 {
 	int					i;
 	pthread_mutex_t		*mutex;
-	pthread_mutexattr_t	attr;
 
 	mutex = (pthread_mutex_t*)malloc(sizeof(pthread_mutex_t) * data->size);
 	if (mutex == NULL)
@@ -50,8 +42,7 @@ int				init(t_data *data)
 	data->start = current_ms();
 	if (pthread_mutex_init(&data->io_lock, NULL) == -1)
 		return (-1);
-	custom_mutexattr_init(&attr);
-	if (pthread_mutex_init(&data->dead, &attr) == -1)
+	if (pthread_mutex_init(&data->dead, NULL) == -1)
 		return (-1);
 	return (0);
 }
@@ -88,19 +79,19 @@ uint64_t		current_ms(void)
 void			*philosopher(void *ptr)
 {
 	t_philo	*philo;
-	int		count;
 
 	philo = (t_philo*)ptr;
-	count = g_data.times_must_eat;
-	while (count-- || g_data.times_must_eat < 0)
+	philo->count = g_data.times_must_eat;
+	while (philo->count > 0 || g_data.times_must_eat < 0)
 	{
-		if (is_dead(&g_data.dead))
-			return (NULL);
+		stop_if_dead();
 		lock(philo);
 		do_eat(philo);
 		unlock(philo);
 		do_sleep(philo);
 		do_think(philo);
+		if (g_data.times_must_eat >= 0)
+			philo->count--;
 	}
 	return (NULL);
 }

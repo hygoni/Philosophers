@@ -6,27 +6,38 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 05:21:49 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/18 00:49:15 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/18 15:54:32 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include <unistd.h>
 #include "ft.h"
 #include "philo.h"
 #include "setting.h"
 
-extern		int	g_died;
 extern		t_data	g_data;
 
-int		is_dead(pthread_mutex_t *dead)
+void		stop_if_dead(void)
 {
-	if (pthread_mutex_unlock(dead) == 0)
-	{
-		pthread_mutex_lock(dead);
-		return (1);
-	}
-	else
+	pthread_mutex_lock(&g_data.dead);
+	pthread_mutex_unlock(&g_data.dead);
+}
+
+int			is_eating_done(t_philo *philos)
+{
+	int			i;
+
+	if (g_data.times_must_eat < 0)
 		return (0);
+	i = 0;
+	while (i < g_data.size)
+	{
+		if (philos[i].count > 0)
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
 void		*monitor(void *ptr)
@@ -34,14 +45,14 @@ void		*monitor(void *ptr)
 	int			i;
 	t_philo		*philos;
 
+	usleep(10000);
 	philos = (t_philo*)ptr;
 	while (1)
 	{
 		i = 0;
 		while (i < g_data.size)
 		{
-
-			if (current_ms() - philos[i].last_eat_time 
+			if (current_ms() - philos[i].last_eat_time
 					>= (uint64_t)g_data.time_to_die)
 			{
 				print(&g_data.io_lock, current_ms() - g_data.start, \
@@ -49,7 +60,9 @@ void		*monitor(void *ptr)
 				pthread_mutex_lock(&g_data.dead);
 				return (NULL);
 			}
-			usleep(1000);
+			if (is_eating_done(philos))
+				return (NULL);
+			usleep(100);
 		}
 	}
 	return (NULL);

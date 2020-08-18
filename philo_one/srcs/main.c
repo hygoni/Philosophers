@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:27:38 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/18 00:45:07 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/18 15:55:25 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #include "philo.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <pthread.h>
+#include <unistd.h>
 
 t_data		g_data;
 int			g_died = 0;
@@ -50,22 +52,22 @@ int		run_philo(t_philo **philos_out, pthread_t **threads_out)
 	threads = (pthread_t*)malloc(sizeof(pthread_t) * (g_data.size + 1));
 	if (philos == NULL || threads == NULL)
 		return (error_ret("Error\n", 1));
-	i = 0;
-	while (i < g_data.size)
+	i = -1;
+	while (++i < g_data.size)
 	{
 		philos[i].idx = i + 1;
 		philos[i].last_eat_time = current_ms();
 		philos[i].left = &g_data.mutex[(i == g_data.size - 1) ? 0 : i];
 		philos[i].right = &g_data.mutex[(i == g_data.size - 1) ? i : i + 1];
 		pthread_create(&threads[i], NULL, philosopher, &philos[i]);
-		i++;
 	}
 	pthread_create(&threads[g_data.size], NULL, monitor, philos);
 	*philos_out = philos;
 	*threads_out = threads;
 	i = 0;
 	while (i < g_data.size)
-		pthread_join(threads[i++], NULL);
+		pthread_detach(threads[i++]);
+	pthread_join(threads[g_data.size], NULL);
 	return (0);
 }
 
