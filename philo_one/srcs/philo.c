@@ -6,11 +6,10 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:47:58 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/18 18:22:07 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/19 01:16:33 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <pthread.h>
 #include <stdlib.h>
 #include <sys/time.h>
@@ -77,6 +76,8 @@ uint64_t		current_ms(void)
 	return (millis);
 }
 
+#include <stdio.h>
+
 void			*philosopher(void *ptr)
 {
 	t_philo	*philo;
@@ -91,8 +92,6 @@ void			*philosopher(void *ptr)
 		unlock(philo);
 		do_sleep(philo);
 		do_think(philo);
-		if (g_data.times_must_eat >= 0)
-			philo->count--;
 	}
 	return (NULL);
 }

@@ -6,11 +6,10 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 05:21:49 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/18 22:05:32 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/19 01:16:15 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <unistd.h>
 #include "ft.h"
 #include "philo.h"
@@ -52,6 +51,8 @@ void		*monitor(void *ptr)
 		i = 0;
 		while (i < g_data.size)
 		{
+			if (is_eating_done(philos))
+				return (NULL);
 			diff = current_ms() - philos[i].last_eat_time;
 			if (diff >= (uint64_t)g_data.time_to_die)
 			{
@@ -60,8 +61,6 @@ void		*monitor(void *ptr)
 				pthread_mutex_lock(&g_data.dead);
 				return (NULL);
 			}
-			if (is_eating_done(philos))
-				return (NULL);
 			i++;
 		}
 		usleep(100);
