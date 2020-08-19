@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 01:26:33 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/19 01:21:54 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/19 04:15:30 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	ft_putnbr(uint64_t n)
 
 void	print(pthread_mutex_t *lock, uint64_t time, int number, char *action)
 {
+	stop_if_dead();
 	pthread_mutex_lock(lock);
 	ft_putnbr(time);
 	ft_putchar(' ');

@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:27:38 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/18 22:01:57 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/20 01:36:11 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "setting.h"
 #include "philo.h"
 #include <stdlib.h>
+#include <unistd.h>
 
 t_data		g_data;
 
@@ -55,7 +56,16 @@ int		run_philo(t_philo **philos_out, pthread_t **threads_out)
 		philos[i].idx = i + 1;
 		philos[i].last_eat_time = current_ms();
 		pthread_create(&threads[i], NULL, monitor, &philos[i]);
-		i++;
+		i += 2;
+	}
+	usleep(g_data.time_to_eat * 1000);
+	i = 1;
+	while (i < g_data.number_of_philo)
+	{
+		philos[i].idx = i + 1;
+		philos[i].last_eat_time = current_ms();
+		pthread_create(&threads[i], NULL, monitor, &philos[i]);
+		i += 2;
 	}
 	*philos_out = philos;
 	*threads_out = threads;
@@ -76,7 +86,8 @@ int		main(int argc, char **argv)
 		return (error_ret("Error\n", 1));
 	else if (run_philo(&philos, &threads) == -1)
 		return (error_ret("Error\n", 1));
-	else if (clear(&g_data) == -1)
+	usleep(1000 * 1000);
+	if (clear(&g_data) == -1)
 		return (error_ret("Error\n", 1));
 	free(philos);
 	free(threads);

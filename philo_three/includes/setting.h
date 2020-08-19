@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:39:16 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/18 22:01:31 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/20 01:15:57 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct		s_data
 typedef struct		s_philo
 {
 	int				idx;
+	int				is_stopped;
 	uint64_t		last_eat_time;
 }					t_philo;
 

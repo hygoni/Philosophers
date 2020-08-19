@@ -6,10 +6,11 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:47:58 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/18 22:01:53 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/20 01:35:10 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include <signal.h>
 #include <pthread.h>
 #include <stdlib.h>
@@ -30,12 +31,13 @@ void			*monitor_starvation(void *ptr)
 	philo = (t_philo*)ptr;
 	while (1)
 	{
-		if (current_ms() - philo->last_eat_time >= (uint64_t)g_data.time_to_die)
+		if (current_ms() - philo->last_eat_time >= \
+			(uint64_t)g_data.time_to_die && !philo->is_stopped)
 		{
-			sem_wait(g_data.dead_lock);
 			print(g_data.io_lock, current_ms() - g_data.start, \
 					philo->idx, "died");
 			kill(g_data.pid[philo->idx], SIGINT);
+			sem_wait(g_data.dead_lock);
 			return (NULL);
 		}
 		usleep(100);
@@ -104,6 +106,7 @@ void			*philosopher(void *ptr)
 	count = g_data.times_must_eat;
 	pthread_create(&thread, NULL, monitor_starvation, philo);
 	pthread_detach(thread);
+	philo->is_stopped = 0;
 	while (count-- || g_data.times_must_eat < 0)
 	{
 		stop_if_dead();
@@ -113,5 +116,6 @@ void			*philosopher(void *ptr)
 		do_sleep(philo);
 		do_think(philo);
 	}
+	philo->is_stopped = 1;
 	return (NULL);
 }

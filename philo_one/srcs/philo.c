@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:47:58 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/19 01:40:25 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/20 01:14:39 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,17 @@ extern t_data	g_data;
 int				init(t_data *data)
 {
 	int					i;
-	pthread_mutex_t		*mutex;
-
-	mutex = (pthread_mutex_t*)malloc(sizeof(pthread_mutex_t) * data->size);
-	if (mutex == NULL)
+	
+	data->mutex = (pthread_mutex_t*)malloc(sizeof(pthread_mutex_t) * data->size);
+	if (data->mutex == NULL)
 		return (-1);
 	i = 0;
 	while (i < data->size)
 	{
-		if (pthread_mutex_init(&mutex[i], NULL) == -1)
+		if (pthread_mutex_init(&data->mutex[i], NULL) == -1)
 			return (-1);
 		i++;
 	}
-	data->mutex = mutex;
 	data->start = current_ms();
 	if (pthread_mutex_init(&data->io_lock, NULL) == -1)
 		return (-1);
@@ -85,7 +83,9 @@ void			*philosopher(void *ptr)
 	philo->is_stopped = 0;
 	while (philo->count > 0 || g_data.times_must_eat < 0)
 	{
+		//wait_sem(&g_data.eat);
 		lock(philo);
+		//post_sem(&g_data.eat);
 		do_eat(philo);
 		unlock(philo);
 		do_sleep(philo);
