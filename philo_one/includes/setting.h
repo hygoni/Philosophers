@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:39:16 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/20 01:14:46 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/20 19:24:14 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef struct			s_data
 	uint64_t			start;
 	pthread_mutex_t		*mutex;
 	pthread_mutex_t		dead;
-	pthread_mutex_t		edit;
+	pthread_mutex_t		pickup;
 	pthread_mutex_t		io_lock;
 }						t_data;
 

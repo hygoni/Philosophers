@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:47:58 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/20 01:14:39 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/20 19:26:32 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ int				init(t_data *data)
 		return (-1);
 	if (pthread_mutex_init(&data->dead, NULL) == -1)
 		return (-1);
+	if (pthread_mutex_init(&data->pickup, NULL) == -1)
+		return (-1);
 	return (0);
 }
 
@@ -60,6 +62,8 @@ int				clear(t_data *data)
 	if (pthread_mutex_destroy(&data->io_lock) == -1)
 		return (-1);
 	if (pthread_mutex_destroy(&data->dead) == -1)
+		return (-1);
+	if (pthread_mutex_destroy(&data->pickup) == -1)
 		return (-1);
 	return (0);
 }
@@ -83,9 +87,7 @@ void			*philosopher(void *ptr)
 	philo->is_stopped = 0;
 	while (philo->count > 0 || g_data.times_must_eat < 0)
 	{
-		//wait_sem(&g_data.eat);
 		lock(philo);
-		//post_sem(&g_data.eat);
 		do_eat(philo);
 		unlock(philo);
 		do_sleep(philo);

@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 05:16:30 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/19 12:44:49 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/20 19:26:17 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,14 @@ extern	t_data g_data;
 
 void	lock(t_philo *philo)
 {
-	pthread_mutex_lock(&g_data.edit);
-	
-	pthread_mutex_unlock(&g_data.edit);
+	pthread_mutex_lock(&g_data.pickup);
 	pthread_mutex_lock(philo->left);
+	print(&g_data.io_lock, current_ms() - g_data.start, \
+			philo->idx, "has taken a fork");
 	pthread_mutex_lock(philo->right);
 	print(&g_data.io_lock, current_ms() - g_data.start, \
 			philo->idx, "has taken a fork");
-	print(&g_data.io_lock, current_ms() - g_data.start, \
-			philo->idx, "has taken a fork");
+	pthread_mutex_unlock(&g_data.pickup);
 }
 
 void	unlock(t_philo *philo)
