@@ -15,6 +15,8 @@
 #include <unistd.h>
 #include "setting.h"
 #include "philo.h"
+#include <stdint.h>
+#include "ft.h"
 
 extern	t_data	g_data;
 

@@ -42,6 +42,8 @@ int		error_ret(char *msg, int ret)
 	return (ret);
 }
 
+#include <stdio.h>
+
 int		run_philo(t_philo **philos_out, pthread_t **threads_out)
 {
 	int			i;
@@ -57,21 +59,21 @@ int		run_philo(t_philo **philos_out, pthread_t **threads_out)
 	{
 		philos[i].idx = i + 1;
 		philos[i].last_eat_time = current_ms();
-		philos[i].left = &g_data.mutex[(i == g_data.size - 1) ? 0 : i];
-		philos[i].right = &g_data.mutex[(i == g_data.size - 1) ? i : i + 1];
-		//philos[i].left = &g_data.mutex[i];
-		//philos[i].right = &g_data.mutex[(i + 1) % g_data.size];
+		philos[i].left = &g_data.mutex[i];
+		philos[i].right = &g_data.mutex[(i + 1) % g_data.size];
+		printf("starting %d ...\n", philos[i].idx);
 		pthread_create(&threads[i], NULL, philosopher, &philos[i]);
 		i += 2;
 	}
-	usleep(g_data.time_to_eat * 1000);
+	ft_sleep(g_data.time_to_sleep);
 	i = 1;
 	while (i < g_data.size)
 	{
 		philos[i].idx = i + 1;
 		philos[i].last_eat_time = current_ms();
-		philos[i].left = &g_data.mutex[(i == g_data.size - 1) ? 0 : i];
-		philos[i].right = &g_data.mutex[(i == g_data.size - 1) ? i : i + 1];
+		philos[i].left = &g_data.mutex[i];
+		philos[i].right = &g_data.mutex[(i + 1) % g_data.size];
+		printf("starting %d ...\n", philos[i].idx);
 		pthread_create(&threads[i], NULL, philosopher, &philos[i]);
 		i += 2;
 	}
@@ -96,7 +98,7 @@ int		main(int argc, char **argv)
 		return (error_ret("Error\n", 1));
 	else if (run_philo(&philos, &threads) == -1)
 		return (error_ret("Error\n", 1));
-	usleep(1000 * 1000);
+	ft_sleep(1000);
 	if (clear(&g_data) == -1)
 		return (error_ret("Error\n", 1));
 	free(philos);

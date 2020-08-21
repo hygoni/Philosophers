@@ -42,14 +42,14 @@ void	do_eat(t_philo *philo)
 	philo->last_eat_time = current_ms();
 	if (g_data.times_must_eat >= 0)
 		philo->count--;
-	usleep(g_data.time_to_eat * 1000);
+	ft_sleep(g_data.time_to_eat);
 }
 
 void	do_sleep(t_philo *philo)
 {
 	print(&g_data.io_lock, current_ms() - g_data.start, \
 			philo->idx, "is sleeping");
-	usleep(g_data.time_to_sleep * 1000);
+	ft_sleep(g_data.time_to_sleep);
 }
 
 void	do_think(t_philo *philo)

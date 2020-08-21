@@ -10,7 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_atoi(const char *str)
+#include "ft.h"
+#include "philo.h"
+#include <stdint.h>
+#include <unistd.h>
+
+int	ft_atoi(char *str)
 {
 	int		sign;
 	long	num;
@@ -29,4 +34,18 @@ int	ft_atoi(const char *str)
 		str++;
 	}
 	return ((int)num * sign);
+}
+
+#include <stdio.h>
+
+void	ft_sleep(int ms)
+{
+	uint64_t	start;
+
+	start = current_ms();
+	while (current_ms() - start < (uint64_t)ms)
+	{
+		usleep(10);
+	}
+	return ;
 }

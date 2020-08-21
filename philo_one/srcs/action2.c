@@ -64,7 +64,7 @@ void		*monitor(void *ptr)
 				return (NULL);
 			i++;
 		}
-		usleep(100);
+		ft_sleep(1);
 	}
 	return (NULL);
 }

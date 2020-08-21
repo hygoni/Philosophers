@@ -19,6 +19,7 @@
 void	ft_putchar(char c);
 void	ft_putstr(char *str);
 void	ft_putnbr(uint64_t n);
+void	ft_sleep(int ms);
 int		ft_atoi(char *str);
 void	print(pthread_mutex_t *lock, uint64_t time, int number, char *msg);
 
