@@ -16,6 +16,7 @@
 #include "setting.h"
 #include <semaphore.h>
 #include <pthread.h>
+#include <stdio.h>
 
 extern		t_data	g_data;
 

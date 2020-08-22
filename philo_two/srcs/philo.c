@@ -49,14 +49,15 @@ int				init(t_data *data)
 
 int				clear(t_data *data)
 {
-	sem_close(data->eat_lock);
-	sem_close(data->fork_lock);
-	sem_close(data->io_lock);
-	sem_close(data->dead_lock);
+	(void)data;
 	sem_unlink("eat_lock");
 	sem_unlink("fork_lock");
 	sem_unlink("io_lock");
 	sem_unlink("dead_lock");
+	//sem_close(data->eat_lock);
+	//sem_close(data->dead_lock);
+	//sem_close(data->fork_lock);
+	//sem_close(data->io_lock);
 	return (0);
 }
 

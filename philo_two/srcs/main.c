@@ -91,7 +91,7 @@ int		main(int argc, char **argv)
 		return (error_ret("Error\n", 1));
 	else if (run_philo(&philos, &threads) == -1)
 		return (error_ret("Error\n", 1));
-	usleep(1000 * 1000);
+	usleep(1000);
 	if (clear(&g_data) == -1)
 		return (error_ret("Error\n", 1));
 	free(philos);
