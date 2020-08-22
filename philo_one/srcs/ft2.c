@@ -36,8 +36,6 @@ int	ft_atoi(char *str)
 	return ((int)num * sign);
 }
 
-#include <stdio.h>
-
 void	ft_sleep(int ms)
 {
 	uint64_t	start;

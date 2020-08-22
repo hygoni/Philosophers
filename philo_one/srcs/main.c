@@ -42,8 +42,6 @@ int		error_ret(char *msg, int ret)
 	return (ret);
 }
 
-#include <stdio.h>
-
 int		run_philo(t_philo **philos_out, pthread_t **threads_out)
 {
 	int			i;
@@ -61,7 +59,6 @@ int		run_philo(t_philo **philos_out, pthread_t **threads_out)
 		philos[i].last_eat_time = current_ms();
 		philos[i].left = &g_data.mutex[i];
 		philos[i].right = &g_data.mutex[(i + 1) % g_data.size];
-		printf("starting %d ...\n", philos[i].idx);
 		pthread_create(&threads[i], NULL, philosopher, &philos[i]);
 		i += 2;
 	}
@@ -73,7 +70,6 @@ int		run_philo(t_philo **philos_out, pthread_t **threads_out)
 		philos[i].last_eat_time = current_ms();
 		philos[i].left = &g_data.mutex[i];
 		philos[i].right = &g_data.mutex[(i + 1) % g_data.size];
-		printf("starting %d ...\n", philos[i].idx);
 		pthread_create(&threads[i], NULL, philosopher, &philos[i]);
 		i += 2;
 	}
