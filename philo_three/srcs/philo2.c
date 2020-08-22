@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/18 21:59:31 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/20 01:35:20 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/22 18:17:49 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,13 @@ void			*monitor(void *ptr)
 	{
 		g_data.pid[philo->idx] = child;
 		waitpid(child, &status, 0);
-		if (WIFSIGNALED(status))
+		if (WEXITSTATUS(status) != EXIT_SUCCESS)
 		{
 			i = 0;
 			while (i < g_data.number_of_philo)
 			{
 				if (g_data.pid[i] != child)
-					kill(g_data.pid[i], SIGTERM);
+					kill(g_data.pid[i], SIGINT);
 				i++;
 			}
 		}

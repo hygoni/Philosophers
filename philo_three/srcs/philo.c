@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:47:58 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/22 18:04:01 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/22 18:15:59 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void			*monitor_starvation(void *ptr)
 		{
 			print(g_data.io_lock, current_ms() - g_data.start, \
 					philo->idx, "died");
-			kill(g_data.pid[philo->idx], SIGINT);
 			sem_wait(g_data.dead_lock);
+			exit(EXIT_FAILURE);
 			return (NULL);
 		}
 		usleep(100);
@@ -92,6 +92,8 @@ uint64_t		current_ms(void)
 	return (millis);
 }
 
+#include <stdio.h>
+
 void			*philosopher(void *ptr)
 {
 	t_philo		*philo;
@@ -105,7 +107,6 @@ void			*philosopher(void *ptr)
 	philo->is_stopped = 0;
 	while (count-- || g_data.times_must_eat < 0)
 	{
-		stop_if_dead();
 		lock(philo);
 		do_eat(philo);
 		unlock();
