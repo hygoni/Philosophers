@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:47:58 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/22 18:19:25 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/22 18:53:53 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ void			*monitor_starvation(void *ptr)
 		if (current_ms() - philo->last_eat_time >= \
 			(uint64_t)g_data.time_to_die && !philo->is_stopped)
 		{
-			print(g_data.io_lock, current_ms() - g_data.start, \
-					philo->idx, "died");
 			sem_wait(g_data.dead_lock);
+			print_no_deadcheck(g_data.io_lock, \
+				current_ms() - g_data.start, philo->idx, "died");
 			exit(EXIT_FAILURE);
 			return (NULL);
 		}

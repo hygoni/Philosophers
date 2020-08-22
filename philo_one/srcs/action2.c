@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 05:21:49 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/22 18:42:19 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/22 18:50:34 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ void		*monitor(void *ptr)
 			if (current_ms() - philos[i].last_eat_time >= \
 					(uint64_t)g_data.time_to_die && !philos[i].is_stopped)
 			{
-				print(&g_data.io_lock, current_ms() - g_data.start, \
-						philos[i].idx, "died");
 				pthread_mutex_lock(&g_data.dead);
+				print_no_deadcheck(&g_data.io_lock, \
+						current_ms() - g_data.start, philos[i].idx, "died");
 				return (NULL);
 			}
 			if (is_eating_done(philos))

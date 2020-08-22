@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 01:26:33 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/22 18:09:57 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/22 18:53:03 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,19 @@ void	ft_putnbr(uint64_t n)
 void	print(sem_t *lock, uint64_t timestamp, int philo_number, char *action)
 {
 	stop_if_dead();
+	sem_wait(lock);
+	ft_putnbr(timestamp);
+	ft_putchar(' ');
+	ft_putnbr(philo_number);
+	ft_putchar(' ');
+	ft_putstr(action);
+	ft_putchar('\n');
+	sem_post(lock);
+}
+
+void	print_no_deadcheck(sem_t *lock, uint64_t timestamp, \
+		int philo_number, char *action)
+{
 	sem_wait(lock);
 	ft_putnbr(timestamp);
 	ft_putchar(' ');
