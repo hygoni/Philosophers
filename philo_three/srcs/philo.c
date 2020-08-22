@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:47:58 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/22 18:15:59 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/22 18:19:25 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,6 @@ uint64_t		current_ms(void)
 	millis = (time.tv_sec * (uint64_t)1000) + (time.tv_usec / 1000);
 	return (millis);
 }
-
-#include <stdio.h>
 
 void			*philosopher(void *ptr)
 {

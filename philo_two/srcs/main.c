@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:27:38 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/20 01:08:49 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/22 18:26:06 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,27 @@ int		parse(t_data *data, int argc, char **argv)
 	return (0);
 }
 
-int		error_ret(char *msg, int ret)
+void	philo_create(pthread_t *threads, t_philo *philos)
 {
-	ft_putstr(msg);
-	return (ret);
+	int		i;
+
+	i = 0;
+	while (i < g_data.number_of_philo)
+	{
+		philos[i].idx = i + 1;
+		philos[i].last_eat_time = current_ms();
+		pthread_create(&threads[i], NULL, philosopher, &philos[i]);
+		i += 2;
+	}
+	ft_sleep(g_data.time_to_eat);
+	i = 1;
+	while (i < g_data.number_of_philo)
+	{
+		philos[i].idx = i + 1;
+		philos[i].last_eat_time = current_ms();
+		pthread_create(&threads[i], NULL, philosopher, &philos[i]);
+		i += 2;
+	}
 }
 
 int		run_philo(t_philo **philos_out, pthread_t **threads_out)
@@ -53,23 +70,7 @@ int		run_philo(t_philo **philos_out, pthread_t **threads_out)
 	if (philos == NULL || threads == NULL)
 		return (error_ret("Error\n", 1));
 	g_data.start = current_ms();
-	i = 1;
-	while (i < g_data.number_of_philo)
-	{
-		philos[i].idx = i + 1;
-		philos[i].last_eat_time = current_ms();
-		pthread_create(&threads[i], NULL, philosopher, &philos[i]);
-		i += 2;
-	}
-	ft_sleep(g_data.time_to_eat);
-	i = 0;
-	while (i < g_data.number_of_philo)
-	{
-		philos[i].idx = i + 1;
-		philos[i].last_eat_time = current_ms();
-		pthread_create(&threads[i], NULL, philosopher, &philos[i]);
-		i += 2;
-	}
+	philo_create(threads, philos);
 	pthread_create(&threads[g_data.size], NULL, monitor, philos);
 	*philos_out = philos;
 	*threads_out = threads;

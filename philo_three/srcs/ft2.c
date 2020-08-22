@@ -6,15 +6,22 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 01:37:08 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/22 14:11:26 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/22 18:23:11 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdint.h>
 #include "philo.h"
+#include "ft.h"
 
-int	ft_atoi(const char *str)
+int		error_ret(char *msg, int ret)
+{
+	ft_putstr(msg);
+	return (ret);
+}
+
+int		ft_atoi(char *str)
 {
 	int		sign;
 	long	num;
