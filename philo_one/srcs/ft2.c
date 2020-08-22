@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 01:37:08 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/16 01:37:16 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/22 14:01:17 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	ft_sleep(int ms)
 	start = current_ms();
 	while (current_ms() - start < (uint64_t)ms)
 	{
-		usleep(10);
+		usleep(500);
 	}
 	return ;
 }

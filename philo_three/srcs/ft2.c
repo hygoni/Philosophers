@@ -6,9 +6,13 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 01:37:08 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/16 01:37:16 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/22 14:01:30 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <unistd.h>
+#include <stdint.h>
+#include "philo.h"
 
 int	ft_atoi(const char *str)
 {
@@ -29,4 +33,16 @@ int	ft_atoi(const char *str)
 		str++;
 	}
 	return ((int)num * sign);
+}
+
+void	ft_sleep(int ms)
+{
+	uint64_t	start;
+
+	start = current_ms();
+	while (current_ms() - start < (uint64_t)ms)
+	{
+		usleep(500);
+	}
+	return ;
 }

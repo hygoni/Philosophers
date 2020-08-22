@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 14:59:38 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/18 18:34:18 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/22 13:59:03 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ int			is_died(t_philo *philo);
 void		lock(t_philo *philo);
 void		unlock();
 void		stop_if_dead();
+void		ft_sleep(int ms);
 
 #endif
