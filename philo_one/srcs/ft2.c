@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 01:37:08 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/22 14:01:17 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/22 17:39:16 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,13 @@
 #include <stdint.h>
 #include <unistd.h>
 
-int	ft_atoi(char *str)
+int		error_ret(char *msg, int ret)
+{
+	ft_putstr(msg);
+	return (ret);
+}
+
+int		ft_atoi(char *str)
 {
 	int		sign;
 	long	num;
@@ -43,7 +49,7 @@ void	ft_sleep(int ms)
 	start = current_ms();
 	while (current_ms() - start < (uint64_t)ms)
 	{
-		usleep(500);
+		usleep(100);
 	}
 	return ;
 }

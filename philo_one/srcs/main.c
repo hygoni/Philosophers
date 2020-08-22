@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:27:38 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/20 19:27:11 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/22 17:39:26 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,22 +36,10 @@ int		parse(t_data *data, int argc, char **argv)
 	return (1);
 }
 
-int		error_ret(char *msg, int ret)
+void	philo_create(pthread_t *threads, t_philo *philos)
 {
-	ft_putstr(msg);
-	return (ret);
-}
+	int		i;
 
-int		run_philo(t_philo **philos_out, pthread_t **threads_out)
-{
-	int			i;
-	t_philo		*philos;
-	pthread_t	*threads;
-
-	philos = (t_philo*)malloc(sizeof(t_philo) * g_data.size);
-	threads = (pthread_t*)malloc(sizeof(pthread_t) * (g_data.size + 1));
-	if (philos == NULL || threads == NULL)
-		return (error_ret("Error\n", 1));
 	i = 0;
 	while (i < g_data.size)
 	{
@@ -73,6 +61,19 @@ int		run_philo(t_philo **philos_out, pthread_t **threads_out)
 		pthread_create(&threads[i], NULL, philosopher, &philos[i]);
 		i += 2;
 	}
+}
+
+int		run_philo(t_philo **philos_out, pthread_t **threads_out)
+{
+	int			i;
+	t_philo		*philos;
+	pthread_t	*threads;
+
+	philos = (t_philo*)malloc(sizeof(t_philo) * g_data.size);
+	threads = (pthread_t*)malloc(sizeof(pthread_t) * (g_data.size + 1));
+	if (philos == NULL || threads == NULL)
+		return (error_ret("Error\n", 1));
+	philo_create(threads, philos);
 	pthread_create(&threads[g_data.size], NULL, monitor, philos);
 	*philos_out = philos;
 	*threads_out = threads;

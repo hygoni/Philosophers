@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:47:58 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/20 19:26:32 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/22 17:39:07 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,9 @@ extern t_data	g_data;
 int				init(t_data *data)
 {
 	int					i;
-	
-	data->mutex = (pthread_mutex_t*)malloc(sizeof(pthread_mutex_t) * data->size);
+
+	data->mutex = \
+		(pthread_mutex_t*)malloc(sizeof(pthread_mutex_t) * data->size);
 	if (data->mutex == NULL)
 		return (-1);
 	i = 0;
