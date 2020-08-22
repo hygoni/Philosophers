@@ -10,7 +10,7 @@ import psutil
 # How many 'long' tests are needed
 N_LONG_TESTS = 3
 # How many seconds must a program run uninterrupted
-LONG_TEST_LENGTH = 10
+LONG_TEST_LENGTH = 30
 
 
 CPU_COUNT = psutil.cpu_count()
