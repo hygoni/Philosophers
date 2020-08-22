@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:27:38 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/22 18:25:36 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/22 18:46:17 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int		main(int argc, char **argv)
 		return (error_ret("Error\n", 1));
 	else if (run_philo(&philos, &threads) == -1)
 		return (error_ret("Error\n", 1));
-	usleep(1000);
+	ft_sleep(1);
 	if (clear(&g_data) == -1)
 		return (error_ret("Error\n", 1));
 	free(philos);
