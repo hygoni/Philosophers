@@ -6,13 +6,14 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 01:26:33 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/18 18:24:07 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/22 18:02:42 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdint.h>
 #include <unistd.h>
 #include <semaphore.h>
+#include "philo.h"
 
 void	ft_putchar(char c)
 {
@@ -38,6 +39,7 @@ void	ft_putnbr(uint64_t n)
 
 void	print(sem_t *lock, uint64_t timestamp, int philo_number, char *action)
 {
+	stop_if_dead();
 	sem_wait(lock);
 	ft_putnbr(timestamp);
 	ft_putchar(' ');

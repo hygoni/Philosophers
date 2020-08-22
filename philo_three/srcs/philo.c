@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/14 08:47:58 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/20 01:35:10 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/22 18:04:01 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,6 @@ int				init(t_data *data)
 
 int				clear(t_data *data)
 {
-	sem_close(data->eat_lock);
-	sem_close(data->fork_lock);
-	sem_close(data->dead_lock);
-	sem_close(data->io_lock);
 	sem_unlink("eat_lock");
 	sem_unlink("fork_lock");
 	sem_unlink("io_lock");

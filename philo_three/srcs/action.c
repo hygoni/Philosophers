@@ -6,7 +6,7 @@
 /*   By: hyeyoo <hyeyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/16 05:16:30 by hyeyoo            #+#    #+#             */
-/*   Updated: 2020/08/22 13:59:40 by hyeyoo           ###   ########.fr       */
+/*   Updated: 2020/08/22 17:53:19 by hyeyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ void	lock(t_philo *philo)
 {
 	sem_wait(g_data.eat_lock);
 	sem_wait(g_data.fork_lock);
-	sem_wait(g_data.fork_lock);
 	print(g_data.io_lock, current_ms() - g_data.start, \
 			philo->idx, "has taken a fork");
+	sem_wait(g_data.fork_lock);
 	print(g_data.io_lock, current_ms() - g_data.start, \
 			philo->idx, "has taken a fork");
 }
