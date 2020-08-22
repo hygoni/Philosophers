@@ -61,7 +61,7 @@ int		run_philo(t_philo **philos_out, pthread_t **threads_out)
 		pthread_create(&threads[i], NULL, philosopher, &philos[i]);
 		i += 2;
 	}
-	usleep(g_data.time_to_eat * 1000);
+	ft_sleep(g_data.time_to_eat);
 	i = 0;
 	while (i < g_data.number_of_philo)
 	{

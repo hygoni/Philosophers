@@ -25,5 +25,6 @@ void		lock(t_philo *philo);
 void		unlock();
 void		stop_if_dead(void);
 void		*monitor(void *ptr);
+void		ft_sleep(int ms);
 
 #endif
